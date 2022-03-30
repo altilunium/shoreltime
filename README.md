@@ -11,7 +11,7 @@ How close are we to the next adzan?
 3. Modify the coordinate and timezone based on your location.  `lamd : longitude, phi : latitude, td : UTC offset (i.e. 7,-5)` 
 5. Open command prompt, type `pip install pystray`. Then `pip install Pillow`
 7. Rename `sy.py` to `sy.pyw`
-8. Press WIN+R, type "shell:startup". Copy `sy.pyw` there.
+8. Press WIN+R, type "shell:startup". Right click, new, shortcut. Point it to where `sy.pyw` is located.
 9. Double click the `sy.pyw`
 
 
