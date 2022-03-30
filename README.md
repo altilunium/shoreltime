@@ -16,4 +16,8 @@ How close are we to the next adzan?
 
 
 ## Algorithm
-The algorithm is based from [Djamaluddin (1990)](https://tdjamaluddin.wordpress.com/2010/12/09/program-jadwal-shalat/) by using solar position algorithm of "Astronomical Almanac for Computer" book.
+The prayer times calculation algorithm is based from [Djamaluddin (1990)](https://tdjamaluddin.wordpress.com/2010/12/09/program-jadwal-shalat/) by using solar position algorithm of "Astronomical Almanac for Computer" book.
+
+Then, today's prayer times (+ midnight time) is stored inside an array. `checkpoints = [subuh,zuhur,ashar,magrib,isya,midnight]`. 
+
+If right now is 14.00 , then we calculate the time difference between 14.00 and zuhur `progress = now - zuhur`, calculate the time difference between zuhur and ashar `complete_progress = ashar - zuhur`, calculate the progress `percentageProgress = (progress / complete_progress) * 100`.
