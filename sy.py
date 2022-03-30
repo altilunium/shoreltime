@@ -6,8 +6,6 @@ import math
 import datetime
 import pickle
 
-
-
 cmonth = datetime.datetime.now().month
 day = datetime.datetime.now().day
 now = datetime.datetime.now()
