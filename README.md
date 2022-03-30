@@ -9,8 +9,8 @@ How close are we to the next adzan?
 1. Install Python 3
 2. Open the source code
 3. Modify the coordinate and timezone based on your location.  `lamd : longitude, phi : latitude, td : UTC offset (i.e. 7,-5)` 
-5. `pip install pystray`
-6. `pip install Pillow`
+5. Open command prompt, type `pip install pystray`
+6. Open command prompt, type `pip install Pillow`
 7. Rename `sy.py` to `sy.pyw`
-8. Press WIN+R, type "shell:startup". Windows Explorer will be opened. Copy `sy.pyw` there.
+8. Press WIN+R, type "shell:startup". Copy `sy.pyw` there.
 9. Double click the `sy.pyw`
