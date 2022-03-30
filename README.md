@@ -22,3 +22,8 @@ Then, today's prayer times (+ midnight time) is stored inside an array. `checkpo
 
 If right now is 14.00 , then we calculate the time difference between 14.00 and zuhur `progress = now - zuhur`, calculate the time difference between zuhur and ashar `complete_progress = ashar - zuhur`, calculate the progress (in percent) `percentageProgress = (progress / complete_progress) * 100`.
 
+## Notes
+Only works for regions between latitude 65 N - 65 S
+
+
+
