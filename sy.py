@@ -4,7 +4,7 @@ from PIL import Image, ImageDraw, ImageFont
 import threading
 import math
 import datetime
-
+import pickle
 
 
 
@@ -126,6 +126,11 @@ def getShoTime():
                 #print("\n")
                 bagSha.append(datetime.time(23,59,59))
 
+                cache = dict()
+                timestring = str(cmonth) +"-"+str(day)
+                cache['bagSha'] = bagSha
+                pickle.dump(cache,open(timestring,'wb'))
+
                 counter = 0
                 for i in bagSha:
                     now = datetime.datetime.now().time()
@@ -140,6 +145,32 @@ def getShoTime():
                     counter = counter + 1   
                             
         currentmonth = currentmonth + 1
+
+
+
+
+
+def getShoTime_c():
+    try:
+        timestring = str(cmonth) +"-"+str(day)
+        a = pickle.load(open(timestring,'rb'))
+        print("Loaded!")
+        bagSha = a['bagSha']
+        for i in bagSha:
+            now = datetime.datetime.now().time()
+            if now < i:
+                seli = datetime.datetime.combine(datetime.date.today(), i) - datetime.datetime.combine(datetime.date.today(), now)
+                gap = datetime.datetime.combine(datetime.date.today(), i) - datetime.datetime.combine(datetime.date.today(), bagSha[counter-1])
+                perc = 100 - int(seli.seconds / gap.seconds * 100)
+                #print(bagSa[counter-1]+str(perc))
+                return bagSa[counter-1]+str(perc)
+                break
+            counter = counter + 1  
+
+    except:
+        return getShoTime()
+
+
 
 
 
@@ -167,6 +198,7 @@ def create_image(width, height, x, bg,fc):
 isEnd = False    
 
 def stop():
+    print("Quitting")
     global isEnd
     icon.stop()
     isEnd = True
@@ -184,7 +216,8 @@ def updateIcon():
     n = 1
     isFirst = True
     while not isEnd:
-        sho = getShoTime()
+        print("Alive!")
+        sho = getShoTime_c()
         code = sho[0]
         num = sho[1:]
 
@@ -218,13 +251,15 @@ def updateIcon():
 
         if isFirst:
             isFirst = False
+            time.sleep(60)
         else:
-            time.sleep(1)
+            time.sleep(60)
 
 
 x = threading.Thread(target=updateIcon)
 x.start()
 icon.run()
+quit()
 
 
 
