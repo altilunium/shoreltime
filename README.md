@@ -1,7 +1,9 @@
-# shoreltime
+# shoreltime (Shalat's Relative-Time)
 How close are we to the next adzan?
+
 ![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
 
+64 means "64% percent completion" from the last adzan to the next adzan. 
 
 ## Installation Guide (Windows)
 1. Install Python
