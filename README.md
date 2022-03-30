@@ -3,7 +3,7 @@ How close are we to the next adzan?
 
 ![alt text](https://github.com/altilunium/shoreltime/blob/main/demo.png?raw=true "Logo Title Text 1")
 
-64 means "64% percent completion" from the last adzan to the next adzan. 
+61 means "61% percent completion" from the last adzan to the next adzan. 
 
 ## Installation Guide (Windows)
 1. Install Python 3
