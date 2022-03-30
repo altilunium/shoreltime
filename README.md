@@ -14,3 +14,7 @@ How close are we to the next adzan?
 7. Rename `sy.py` to `sy.pyw`
 8. Press WIN+R, type "shell:startup". Copy `sy.pyw` there.
 9. Double click the `sy.pyw`
+
+
+## Algorithm
+The algorithm is based from [Djamaluddin (1990)](https://tdjamaluddin.wordpress.com/2010/12/09/program-jadwal-shalat/) by using solar position algorithm of "Astronomical Almanac for Computer" book.
