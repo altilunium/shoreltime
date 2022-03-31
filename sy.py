@@ -5,12 +5,15 @@ import threading
 import math
 import datetime
 import pickle
+import calendar
+
 
 cmonth = datetime.datetime.now().month
 day = datetime.datetime.now().day
 now = datetime.datetime.now()
 now = now.strftime("%H.%M")
 
+#Masukkan longitude 
 lamd = 106.9977272014839
 #Masukkan latitude (south = negative)
 phi = -6.296397800971034
@@ -56,7 +59,10 @@ def something():
 
 def getShoTime():
     global n,a,z
-    month = [31,28,31,30,31,30,31,31,30,31,30,31]
+    if not (calendar.isleap(datetime.datetime.now().year)):
+        month = [31,28,31,30,31,30,31,31,30,31,30,31]
+    else:
+        month = [31,29,31,30,31,30,31,31,30,31,30,31]
     currentmonth = 1
     currentday = 0
     for d in month:
@@ -149,6 +155,8 @@ def getShoTime():
 
 
 def getShoTime_c():
+    cmonth = datetime.datetime.now().month
+    day = datetime.datetime.now().day
     try:
         timestring = str(cmonth) +"-"+str(day)
         a = pickle.load(open(timestring,'rb'))
@@ -224,7 +232,7 @@ def updateIcon():
         sore = (246,215,115)
         magrib = (216,51,51)
         malam = (32,52,63)
-
+        
         if code =='I':
             back = "black"
             front = "white"
@@ -245,7 +253,7 @@ def updateIcon():
             front = "white"
 
 
-        icon.icon = create_image(64, 64, num, malam,"white")
+        icon.icon = create_image(64, 64, num, back,front)
 
         if isFirst:
             isFirst = False
