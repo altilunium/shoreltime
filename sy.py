@@ -30,7 +30,7 @@ def toSec(x):
     return (x.hours * 3600) + (x.minutes * 60) + (x.seconds)
 
 def something():
-    global x, tloc,st,n,a,z
+    global x, tloc,st,zd,dek,z
     t = n + ((a - lamd)/24)
     m = ((0.9856*t) - 3.289)*rad
     l = m + (1.916*rad*math.sin(m)) + (0.02*rad*math.sin(2*m)) + (282.634*rad)
@@ -42,6 +42,9 @@ def something():
     ra = ra + (ql*6)
     sind = 0.39782*math.sin(l)
     cosd = math.sqrt(1-sind*sind)
+    dek = math.atan(sind/cosd)
+    if a == 15:
+        z = math.atan(math.tan(zd) + 1)
     x = (math.cos(z) - sind*math.sin(phi))/(cosd*math.cos(phi))
     if abs(x) > 1:
         return
@@ -52,13 +55,20 @@ def something():
         h = (360-atnx)*24/360
         if a == 18:
             h = 24-h
+        if a == 12:
+            h = 0
+        if a == 15:
+            h = 24-h
         tloc = h + ra - (0.06571*t) - 6.622
         tloc = tloc + 24
         tloc = tloc - (int(tloc/24)*24)
         st = tloc - lamd + td
 
+
+
+
 def getShoTime():
-    global n,a,z
+    global n,a,z,zd,dek
     if not (calendar.isleap(datetime.datetime.now().year)):
         month = [31,28,31,30,31,30,31,31,30,31,30,31]
     else:
@@ -76,7 +86,7 @@ def getShoTime():
 
             #subuh azimut 108
             a = 6
-            z = 108*rad
+            z = 110*rad
             something()
             if abs(x) <= 1:
                 t[0] = st
@@ -109,7 +119,11 @@ def getShoTime():
             t[2] = midday + 2/60
 
             #ashar = (zuhur + magrib)/2
-            t[3] = (t[2] + t[4])/2
+            #t[3] = (t[2] + t[4])/2
+            zd = abs(dek - phi)
+            a = 15
+            something()
+            t[3] = st
 
 
             if (k == day) and (currentmonth == cmonth):
@@ -200,6 +214,43 @@ def create_image(width, height, x, bg,fc):
 
 
 
+def calc():
+    sho = getShoTime_c()
+    code = sho[0]
+    num = sho[1:]
+
+    pagi = (146,207,233)
+    siang = (0,83,156)
+    sore = (246,215,115)
+    magrib = (216,51,51)
+    malam = (32,52,63)
+
+    if code =='I':
+        back = "black"
+        front = "white"
+    elif code == 's':
+        back = pagi
+        front = "black"
+    elif code == 'z':
+        back = siang
+        front = "white"
+    elif code == 'a':
+        back = sore
+        front = "black"
+    elif code == 'm':
+        back = magrib
+        front = "white"
+    elif code == 'i':
+        back = malam
+        front = "white"
+    pack = dict()
+    pack['num'] = num
+    pack['back'] = back
+    pack['front'] = front
+    return pack
+
+
+
 
 isEnd = False    
 
@@ -212,9 +263,11 @@ def stop():
 
 
 # In order for the icon to be displayed, you must provide an icon
+nyaa = calc()
+
 icon = pystray.Icon(
     'test name',
-    icon=create_image(64, 64, ".", "green","black"),
+    icon=create_image(64, 64, nyaa['num'], nyaa['back'],nyaa['front']),
     menu=pystray.Menu(pystray.MenuItem("Quit",stop)))
 
 def updateIcon():
@@ -222,38 +275,8 @@ def updateIcon():
     n = 1
     isFirst = True
     while not isEnd:
-        print("Alive!")
-        sho = getShoTime_c()
-        code = sho[0]
-        num = sho[1:]
-
-        pagi = (146,207,233)
-        siang = (0,83,156)
-        sore = (246,215,115)
-        magrib = (216,51,51)
-        malam = (32,52,63)
-        
-        if code =='I':
-            back = "black"
-            front = "white"
-        elif code == 's':
-            back = pagi
-            front = "black"
-        elif code == 'z':
-            back = siang
-            front = "white"
-        elif code == 'a':
-            back = sore
-            front = "black"
-        elif code == 'm':
-            back = magrib
-            front = "white"
-        elif code == 'i':
-            back = malam
-            front = "white"
-
-
-        icon.icon = create_image(64, 64, num, back,front)
+        nyaa = calc()
+        icon.icon = create_image(64, 64, nyaa['num'], nyaa['back'],nyaa['front'])
 
         if isFirst:
             isFirst = False
@@ -266,7 +289,6 @@ x = threading.Thread(target=updateIcon)
 x.start()
 icon.run()
 quit()
-
 
 
 
